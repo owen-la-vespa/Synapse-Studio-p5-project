@@ -1,27 +1,38 @@
 function setup() {
   createCanvas(800, 800);
   background(0);
-  colorMode(RGB)
+  colorMode(RGB);
+  frameRate(2);
 }
 
 function draw() {
-  stroke(random(255));
+  stroke(1)
   strokeWeight(1);
 
   // Random walk for a single particle
   let x = width / 2;
   let y = height / 2;
+  let lastx = x;
+  let lasty = y;
+  let grayStep = 1;
+  let stepLimit = 1000;
 
-  let i = 0;
   function step() {
-    if (i < 100) {
-      let stepSize = random(1, 50);
+    for (let i = 0; i < stepLimit; i++) {
+
+      let stepSize = random(1, 10);
       let angle = random(TWO_PI);
-      x += stepSize * cos(angle);
-      y += stepSize * sin(angle);
-      point(x, y);
-      i++;
-      setTimeout(step, 10); // Delay of 10 milliseconds
+      x = lastx + stepSize * cos(angle);
+      y = lasty + stepSize * sin(angle);
+      grayStep++;
+      stroke((grayStep / stepLimit) * 255);
+      if (random() > 0.99999) {
+        grayStep = 1
+      }
+      strokeWeight(round(10 - (i / stepLimit) * 10));
+      line(lastx, lasty, x, y);
+      lastx = x;
+      lasty = y;
     }
   }
 

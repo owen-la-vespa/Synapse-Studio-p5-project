@@ -11,7 +11,7 @@ function setup() {
   video.hide();
 
   // Initialize the Handpose model with the video feed
-  handPose = ml5.handpose(video, modelReady);
+  handPose = ml5.handpose(video, {maxHands: 2}, modelReady);
 
   // Listen for the 'predict' event, which fires when hands are detected
   handPose.on('predict', gotHands);
